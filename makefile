@@ -36,6 +36,7 @@ all: includes $(CURDIR)/include/configuration.h $(OBJECT)
 # Copies all include files to the public include directory
 includes: makefile
 	mkdir -p $(CURDIR)/include
+	cp $(CURDIR)/src/include/c/* $(CURDIR)/include
 	cp $(CURDIR)/src/include/platform/* $(CURDIR)/include
 
 # Include Configuration
@@ -63,6 +64,7 @@ $(CURDIR)/include/configuration.h: makefile
 # Cleans all generated files
 .PHONY: clean
 clean: makefile
+	-$(RM) $(TEST_OBJECT)
 	-$(RM) $(OBJECT)
 	-$(RM) $(DEPEND)
 	-$(RM) -r $(CURDIR)/include

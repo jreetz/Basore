@@ -1,4 +1,4 @@
-/// \file src/runtime/initialize.s
+/// \file src/runtime/initialize.c
 ///
 /// \brief Provides the runtime initialization procedure.
 ///

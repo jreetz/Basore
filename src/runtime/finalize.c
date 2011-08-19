@@ -1,4 +1,4 @@
-/// \file src/runtime/finalize.s
+/// \file src/runtime/finalize.c
 ///
 /// \brief Provides the runtime finalization procedure.
 ///
