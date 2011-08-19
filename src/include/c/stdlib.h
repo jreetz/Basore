@@ -85,13 +85,13 @@ __public int at_quick_exit(void (*func)());
 } // namespace std {
 #endif //defined(__cplusplus)
 
-#if defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+#if defined(__cplusplus) && !defined(_BASORE_NO_C_COMPAT)
 using std::exit;
 using std::_Exit;
 using std::abort;
 using std::quick_exit;
 using std::atexit;
 using std::at_quick_exit;
-#endif // defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+#endif // defined(__cplusplus) && !defined(_BASORE_NO_C_COMPAT)
 
 #endif //!defined(STDLIB_4717D28D_B9BE_49F9_92A9_0924ED5D6709)

@@ -92,10 +92,10 @@ __public int raise(int sig);
 } // namespace std {
 #endif //defined(__cplusplus)
 
-#if defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+#if defined(__cplusplus) && !defined(_BASORE_NO_C_COMPAT)
 using std::sig_atomic_t;
 using std::signal;
 using std::raise;
-#endif // defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+#endif // defined(__cplusplus) && !defined(_BASORE_NO_C_COMPAT)
 
 #endif // !defined(SIGNAL_BE972ECD_0D3D_4ED5_BEB3_DFB4B5BB886D)
