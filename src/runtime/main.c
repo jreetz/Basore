@@ -1,6 +1,6 @@
-/// \file src/runtime/finalize.c
+/// \file src/runtime/main.c
 ///
-/// \brief Provides the runtime finalization procedure.
+/// \brief Provides the runtime main procedure.
 ///
 /// \author Ryan Leckey (mehcode) leckey.ryan@gmail.com
 ///
@@ -10,18 +10,27 @@
 ///
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif // defined(__cplusplus)
 
-/// \brief Runtime finalization procedure (for use in DT_FINI of modules).
-void _fini()
+/// \brief Runtime main procedure.
+void _start()
 {
-    // TODO: Destroy thread_local objects (call destructors)
-    // TODO: Call __cxa_finalize(&__dso_handle)
-    // TODO: Iterate through .fini_array; call all static destructors
-    // TODO: Iterate through .dtors; call all static destructors
+    // Declare status
+    int status;
+
+    // Call initialize and main
+    __asm__ volatile (
+        "call _init;"
+        "call main;"
+        "movl %%eax, %0;"
+        : "=g" (status) : : "%eax");
+
+    // Call exit procedure
+    exit(status);
 }
 
 #ifdef __cplusplus

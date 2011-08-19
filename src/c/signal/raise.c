@@ -29,7 +29,7 @@ __public int raise(int sig)
         __signal_handlers[sig] != SIG_IGN)
     {
         // Yes; call it.
-        (*__signal_handlers[sig])(sig);
+        __signal_handlers[sig](sig);
 
         // Return success
         return 0;

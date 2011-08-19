@@ -34,14 +34,7 @@ __public __noreturn void abort()
     __asm__ volatile (".long 0");
 
     // Attempt to return failure normally
-    // _Exit(EXIT_FAILURE);
-
-    // Loop forever if all else fails
-    for ( ; ; )
-    {
-        // FIXME: Make architecture-dependent intrinsic
-        __asm__ volatile ("hlt");
-    }
+    _Exit(EXIT_FAILURE);
 }
 
 #ifdef __cplusplus

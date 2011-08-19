@@ -60,6 +60,24 @@ __public __noreturn void quick_exit(int status);
 /// \note Referenced from the International C11 Standard §7.22.4.5.
 __public __noreturn void _Exit(int status);
 
+/// \brief Registers a function to be called upon normal termination.
+///
+/// \param[in]  func    The function to be registered.
+///
+/// \returns 0 on success and -1 on failure.
+///
+/// \note Referenced from the International C11 Standard §7.22.4.5.
+__public int atexit(void (*func)());
+
+/// \brief Registers a function to be called upon fast termination.
+///
+/// \param[in]  func    The function to be registered.
+///
+/// \returns 0 on success and -1 on failure.
+///
+/// \note Referenced from the International C11 Standard §7.22.4.5.
+__public int at_quick_exit(void (*func)());
+
 #ifdef __cplusplus
 } // namespace std {
 #endif //defined(__cplusplus)

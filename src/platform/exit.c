@@ -16,6 +16,7 @@
 namespace std {
 #endif //defined(__cplusplus)
 
+/// \par Description:
 /// Requests an exit from the specific hosted platform. This function should never return.
 __public __noreturn void __platform_exit(int status)
 {

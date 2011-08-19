@@ -1,4 +1,4 @@
-/// \file src/c/signal/internal.h
+/// \file src/c/stdlib/internal.c
 ///
 /// \brief Implements private types and variables.
 ///
@@ -12,5 +12,5 @@
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include "internal.h"
 
-// Collection of signal handlers.
-void (*__signal_handlers[6])(int);
+// Linked list of quick exit functions.
+struct __function __quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];

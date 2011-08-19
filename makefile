@@ -76,7 +76,7 @@ clean: makefile
 test: $(TEST_OBJECT)
 	-@rc=0; count=0; rt=0; \
 		for file in $(subst $(CURDIR)/,,$^); do \
-			echo -n "Test ./$$file"; ./$$file; \
+			echo -n "./$$file"; ./$$file; \
 			rt=$$?; \
 			if [ $$rt == 0 ]; then \
 				echo ": Success"; \
