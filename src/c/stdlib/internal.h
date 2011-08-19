@@ -13,10 +13,10 @@
 #include <stdlib.h>
 
 /// \brief Function callback type to be registered by at*() and called by *exit().
-struct __function
+struct _BASORE_function
 {
     /// \brief Address of next function callback description.
-    struct __function* next;
+    struct _BASORE_function* next;
 
     /// \brief Address of this callback.
     void (*address)();
@@ -26,4 +26,4 @@ struct __function
 #define QUICK_EXIT_FUNCTION_BUFFERED  32
 
 /// \brief Linked list of exit functions.
-extern struct __function __quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];
+extern struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];

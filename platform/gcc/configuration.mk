@@ -12,9 +12,18 @@
 ## If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 # Function Attributes
-ATTRIBUTE_PUBLIC    := __attribute__ ((visibility("default")))
-ATTRIBUTE_PROTECTED := __attribute__ ((visibility("hidden")))
-ATTRIBUTE_PRIVATE   := __attribute__ ((visibility("internal")))
-ATTRIBUTE_CONSTANT  := __attribute__ ((const))
-ATTRIBUTE_PURE      := __attribute__ ((pure))
-ATTRIBUTE_NORETURN  := __attribute__ ((noreturn))
+ATTRIBUTE_PUBLIC            := __attribute__ ((visibility("default")))
+ATTRIBUTE_PROTECTED         := __attribute__ ((visibility("hidden")))
+ATTRIBUTE_PRIVATE           := __attribute__ ((visibility("internal")))
+ATTRIBUTE_CONSTANT          := __attribute__ ((const))
+ATTRIBUTE_PURE              := __attribute__ ((pure))
+ATTRIBUTE_NORETURN          := __attribute__ ((noreturn))
+
+# Standard Types
+TYPE_POINTER_DIFFERENCE     := __PTRDIFF_TYPE__
+TYPE_SIZE                   := __SIZE_TYPE__
+TYPE_MAXIMUM_ALIGNMENT      := __MAX_ALIGN_TYPE__
+TYPE_WIDE_CHARACTER         := __WCHAR_TYPE__
+
+# Standard Macros
+MACRO_OFFSETOF              := __builtin_offsetof

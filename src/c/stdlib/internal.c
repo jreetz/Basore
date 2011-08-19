@@ -13,4 +13,4 @@
 #include "internal.h"
 
 // Linked list of quick exit functions.
-struct __function __quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];
+struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];

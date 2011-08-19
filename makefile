@@ -53,12 +53,17 @@ includes: makefile
 $(CURDIR)/include/configuration.h: makefile
 	mkdir -p $(CURDIR)/include
 	rm -f $@
-	echo '#define __constant            $(ATTRIBUTE_CONSTANT)'                 >> $@
-	echo '#define __pure                $(ATTRIBUTE_PURE)'                     >> $@
-	echo '#define __noreturn            $(ATTRIBUTE_NORETURN)'                 >> $@
-	echo '#define __public              $(ATTRIBUTE_PUBLIC)'                   >> $@
-	echo '#define __protected           $(ATTRIBUTE_PROTECTED)'                >> $@
-	echo '#define __private             $(ATTRIBUTE_PRIVATE)'                  >> $@
+	echo '#define __constant            $(ATTRIBUTE_CONSTANT)'                  >> $@
+	echo '#define __pure                $(ATTRIBUTE_PURE)'                      >> $@
+	echo '#define __noreturn            $(ATTRIBUTE_NORETURN)'                  >> $@
+	echo '#define __public              $(ATTRIBUTE_PUBLIC)'                    >> $@
+	echo '#define __protected           $(ATTRIBUTE_PROTECTED)'                 >> $@
+	echo '#define __private             $(ATTRIBUTE_PRIVATE)'                   >> $@
+	echo '#define _BASORE_ptrdiff_t     $(TYPE_POINTER_DIFFERENCE)'             >> $@
+	echo '#define _BASORE_size_t        $(TYPE_SIZE)'                           >> $@
+	echo '#define _BASORE_max_align_t   $(TYPE_MAXIMUM_ALIGNMENT)'              >> $@
+	echo '#define _BASORE_wchar_t       $(TYPE_WIDE_CHARACTER)'                 >> $@
+	echo '#define _BASORE_offsetof      $(MACRO_OFFSETOF)'                      >> $@
 
 # Target: clean
 # Cleans all generated files

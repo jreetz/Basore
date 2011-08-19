@@ -11,7 +11,7 @@
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include "internal.h"
-// TODO: #include <stddef.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 namespace std {
@@ -25,31 +25,31 @@ namespace std {
 __public int at_quick_exit(void (*func)())
 {
     // Is this the first call ?
-    if (!__quick_exit_functions->address)
+    if (!_BASORE_quick_exit_functions->address)
     {
         // Yes; register it #1
-        __quick_exit_functions->address = func;
-        __quick_exit_functions->next = &__quick_exit_functions[1];
+        _BASORE_quick_exit_functions->address = func;
+        _BASORE_quick_exit_functions->next = &_BASORE_quick_exit_functions[1];
 
         // Return success
         return 0;
     }
 
     // Get next slot
-    struct __function* slot;
+    struct _BASORE_function* slot;
     int count = 0;
 
-    for (slot = __quick_exit_functions; slot->next != 0/*FIXME: NULL*/; slot = slot->next, ++count) { }
+    for (slot = _BASORE_quick_exit_functions; slot->next != NULL; slot = slot->next, ++count) { }
 
     // Do we have buffer room ?
     if (count < QUICK_EXIT_FUNCTION_BUFFERED)
     {
         // Allocate
-        slot->next = &__quick_exit_functions[count + 1];
+        slot->next = &_BASORE_quick_exit_functions[count + 1];
         slot = slot->next;
 
         // Set
-        slot->next = 0/*FIXME: NULL*/;
+        slot->next = NULL;
         slot->address = func;
 
         // Return success

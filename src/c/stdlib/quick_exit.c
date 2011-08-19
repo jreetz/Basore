@@ -11,7 +11,7 @@
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include "internal.h"
-// FIXME: #include <stddef.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 namespace std {
@@ -37,7 +37,7 @@ namespace std {
 __public __noreturn void quick_exit(int status)
 {
     // Call functions registered by the at_quick_exit function.
-    for (struct __function* i = __quick_exit_functions; i != 0/*FIXME: NULL*/; i = i->next)
+    for (struct _BASORE_function* i = _BASORE_quick_exit_functions; i != NULL; i = i->next)
     {
         if (i->address)
         {
