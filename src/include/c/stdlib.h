@@ -10,6 +10,9 @@
 ///
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+#ifndef STDLIB_4717D28D_B9BE_49F9_92A9_0924ED5D6709
+#define STDLIB_4717D28D_B9BE_49F9_92A9_0924ED5D6709
+
 #include <configuration.h>
 
 /// \brief Designates a success status when returned to the environment.
@@ -81,3 +84,14 @@ __public int at_quick_exit(void (*func)());
 #ifdef __cplusplus
 } // namespace std {
 #endif //defined(__cplusplus)
+
+#if defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+using std::exit;
+using std::_Exit;
+using std::abort;
+using std::quick_exit;
+using std::atexit;
+using std::at_quick_exit;
+#endif // defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+
+#endif //!defined(STDLIB_4717D28D_B9BE_49F9_92A9_0924ED5D6709)

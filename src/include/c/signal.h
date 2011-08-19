@@ -10,6 +10,9 @@
 ///
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+#ifndef SIGNAL_BE972ECD_0D3D_4ED5_BEB3_DFB4B5BB886D
+#define SIGNAL_BE972ECD_0D3D_4ED5_BEB3_DFB4B5BB886D
+
 #include <configuration.h>
 
 /// \brief Specifies the default action for the signal.
@@ -88,3 +91,11 @@ __public int raise(int sig);
 #ifdef __cplusplus
 } // namespace std {
 #endif //defined(__cplusplus)
+
+#if defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+using std::sig_atomic_t;
+using std::signal;
+using std::raise;
+#endif // defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+
+#endif // !defined(SIGNAL_BE972ECD_0D3D_4ED5_BEB3_DFB4B5BB886D)

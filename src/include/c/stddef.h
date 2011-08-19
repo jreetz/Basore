@@ -10,6 +10,9 @@
 ///
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+#ifndef STDDEF_0FF3D0D8_DD92_4449_8924_333CB6E7D100
+#define STDDEF_0FF3D0D8_DD92_4449_8924_333CB6E7D100
+
 #include <configuration.h>
 
 /// \brief Null pointer constant.
@@ -45,13 +48,21 @@ typedef _BASORE_size_t size_t;
 /// \note Referenced from the International C11 Standard §7.19-2.
 // TODO: typedef _BASORE_max_align_t max_align_t;
 
-#ifndef __cplusplus
 /// \brief Can represent distinct codes for all members of the largest extended character set.
 ///
 /// \note Referenced from the International C11 Standard §7.19-2.
+#ifndef __cplusplus
 typedef _BASORE_wchar_t wchar_t;
 #endif //!defined(__cplusplus)
 
 #ifdef __cplusplus
 } // namespace std {
 #endif //defined(__cplusplus)
+
+#if defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+using std::ptrdiff_t;
+using std::size_t;
+// TODO: using std::max_align_t;
+#endif // defined(__cplusplus) && defined(_BASORE_C_COMPAT)
+
+#endif //!defined(STDDEF_0FF3D0D8_DD92_4449_8924_333CB6E7D100)
