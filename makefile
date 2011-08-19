@@ -70,6 +70,11 @@ $(CURDIR)/include/configuration.h: makefile
 	echo '#define _BASORE_INT_MAX               $(LIMIT_INT)'                           >> $@
 	echo '#define _BASORE_LONG_MAX              $(LIMIT_LONG)'                          >> $@
 	echo '#define _BASORE_LLONG_MAX             $(LIMIT_LONG_LONG)'                     >> $@
+	echo '#define _BASORE_va_list               $(TYPE_VA_LIST)'                        >> $@
+	echo '#define _BASORE_va_start              $(MACRO_VA_BEGIN)'                      >> $@
+	echo '#define _BASORE_va_end                $(MACRO_VA_END)'                        >> $@
+	echo '#define _BASORE_va_arg                $(MACRO_VA_ARG)'                        >> $@
+	echo '#define _BASORE_va_copy               $(MACRO_VA_COPY)'                       >> $@
 	echo '#define _BASORE_HAS_INT8              $(CONDITION_INT8)'                      >> $@
 	echo '#define _BASORE_HAS_INT16             $(CONDITION_INT16)'                     >> $@
 	echo '#define _BASORE_HAS_INT32             $(CONDITION_INT32)'                     >> $@

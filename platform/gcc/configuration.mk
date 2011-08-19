@@ -28,6 +28,15 @@ TYPE_WIDE_CHARACTER         := __WCHAR_TYPE__
 # Standard Macros
 MACRO_OFFSETOF              := __builtin_offsetof
 
+# Varidac Macros
+MACRO_VA_START              := __builtin_va_start
+MACRO_VA_END                := __builtin_va_end
+MACRO_VA_ARG                := __builtin_va_arg
+MACRO_VA_COPY               := __builtin_va_copy
+
+# Varidac Types
+TYPE_VA_LIST                := __builtin_va_list
+
 # Standard Limits
 LIMIT_BIT                   := __CHAR_BIT__
 LIMIT_CHAR                  := __SCHAR_MAX__
