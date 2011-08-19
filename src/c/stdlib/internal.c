@@ -14,3 +14,6 @@
 
 // Linked list of quick exit functions.
 struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];
+
+// Next Pseudo-random Number
+unsigned int _BASORE_rand_next = 1;

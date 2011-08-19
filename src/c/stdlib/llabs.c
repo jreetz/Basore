@@ -1,6 +1,6 @@
-/// \file src/c/stdlib/getenv.c
+/// \file src/c/stdlib/llabs.c
 ///
-/// \brief Implements getenv(), as defined in <stdlib.h>.
+/// \brief Implements llabs(), as defined in <stdlib.h>.
 ///
 /// \author Ryan Leckey (mehcode) leckey.ryan@gmail.com
 ///
@@ -11,23 +11,25 @@
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include <stdlib.h>
+#include <limits.h>
 
 #ifdef __cplusplus
 namespace std {
 #endif // defined(__cplusplus)
 
 /// \par Description:
-/// The \ref getenv function searches an environment list, provided by the host environment,
-/// for a string that matches the string pointed to by \c name. The set of environment names
-/// and the method for altering the environment list are implementation-defined. The
-/// \ref getenv function need not avoid data races with other threads of execution that modify
-/// the environment list.
-__public char* getenv(__attribute__ ((unused)) const char* name)
+/// Compute the absolute value of an integer \c j. If the result cannot be represented,
+/// the behavior is undefined.
+__public long long int llabs(long long int j)
 {
-    // TODO: Search environment list
+    static const int s_bits = CHAR_BIT * sizeof(long long int) - 1;
 
-    // Return failure
-    return NULL;
+    long long int temp = j >> s_bits;
+
+    j ^= temp;
+    j += temp & 0x01;
+
+    return j;
 }
 
 #ifdef __cplusplus

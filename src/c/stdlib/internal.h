@@ -12,6 +12,9 @@
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include <stdlib.h>
 
+/// \brief Number of buffered (for sure available) quick exit functions.
+#define QUICK_EXIT_FUNCTION_BUFFERED  32
+
 /// \brief Function callback type to be registered by at*() and called by *exit().
 struct _BASORE_function
 {
@@ -22,8 +25,8 @@ struct _BASORE_function
     void (*address)();
 };
 
-/// \brief Number of buffered (for sure available) quick exit functions.
-#define QUICK_EXIT_FUNCTION_BUFFERED  32
-
 /// \brief Linked list of exit functions.
 extern struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];
+
+/// \brief Next Pseudo-random Number
+extern unsigned int _BASORE_rand_next;

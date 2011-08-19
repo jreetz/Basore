@@ -65,6 +65,7 @@ $(CURDIR)/include/configuration.h: makefile
 	echo '#define _BASORE_wchar_t               $(TYPE_WIDE_CHARACTER)'                 >> $@
 	echo '#define _BASORE_offsetof              $(MACRO_OFFSETOF)'                      >> $@
 	echo '#define _BASORE_CHAR_UNSIGNED         $(CONDITION_CHAR_UNSIGNED)'             >> $@
+	echo '#define _BASORE_CHAR_BIT              $(LIMIT_BIT)'                           >> $@
 	echo '#define _BASORE_SCHAR_MAX             $(LIMIT_CHAR)'                          >> $@
 	echo '#define _BASORE_SHRT_MAX              $(LIMIT_SHORT)'                         >> $@
 	echo '#define _BASORE_INT_MAX               $(LIMIT_INT)'                           >> $@
@@ -143,6 +144,9 @@ $(CURDIR)/include/configuration.h: makefile
 	echo '#define _BASORE_WCHAR_MAX             $(LIMIT_WIDE_CHARACTER)'                >> $@
 	echo '#define _BASORE_WINT_MAX              $(LIMIT_WIDE_INT)'                      >> $@
 	echo '#define _BASORE_SIG_ATOMIC_MAX        $(LIMIT_SIG_ATMOIC)'                    >> $@
+	echo '#define _BASORE_div_t                 $(TYPE_DIVISION)'                       >> $@
+	echo '#define _BASORE_ldiv_t                $(TYPE_LONG_DIVISION)'                  >> $@
+	echo '#define _BASORE_lldiv_t               $(TYPE_LONG_LONG_DIVISION)'             >> $@
 
 # Target: clean
 # Cleans all generated files
