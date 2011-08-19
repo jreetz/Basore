@@ -27,3 +27,14 @@ TYPE_WIDE_CHARACTER         := __WCHAR_TYPE__
 
 # Standard Macros
 MACRO_OFFSETOF              := __builtin_offsetof
+
+# Standard Limits
+LIMIT_BIT                   := __CHAR_BIT__
+LIMIT_CHAR                  := __SCHAR_MAX__
+LIMIT_SHORT                 := __SHRT_MAX__
+LIMIT_INT                   := __INT_MAX__
+LIMIT_LONG                  := __LONG_MAX__
+LIMIT_LONG_LONG             := __LONG_LONG_MAX__
+
+# Standard Conditionals
+CONDITION_CHAR_UNSIGNED     := defined(__CHAR_UNSIGNED__)

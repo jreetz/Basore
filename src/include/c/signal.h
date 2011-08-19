@@ -77,7 +77,7 @@ typedef volatile int sig_atomic_t; // FIXME: Make atomic_int
 /// \returns The parameter \c func on success and \ref SIG_ERR on failure.
 ///
 /// \note Referenced from the International C11 Standard §7.14.1.1.
-__public void (*signal(int sig, void (*func)(int)))(int);
+extern __public void (*signal(int sig, void (*func)(int)))(int);
 
 /// \brief Carries out the designated action for the signal \c sig.
 ///
@@ -86,7 +86,7 @@ __public void (*signal(int sig, void (*func)(int)))(int);
 /// \returns 0 on success and -1 on failure.
 ///
 /// \note Referenced from the International C11 Standard §7.14.1.2.
-__public int raise(int sig);
+extern __public int raise(int sig);
 
 #ifdef __cplusplus
 } // namespace std {

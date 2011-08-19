@@ -64,6 +64,12 @@ $(CURDIR)/include/configuration.h: makefile
 	echo '#define _BASORE_max_align_t   $(TYPE_MAXIMUM_ALIGNMENT)'              >> $@
 	echo '#define _BASORE_wchar_t       $(TYPE_WIDE_CHARACTER)'                 >> $@
 	echo '#define _BASORE_offsetof      $(MACRO_OFFSETOF)'                      >> $@
+	echo '#define _BASORE_CHAR_UNSIGNED $(CONDITION_CHAR_UNSIGNED)'             >> $@
+	echo '#define _BASORE_SCHAR_MAX     $(LIMIT_CHAR)'                          >> $@
+	echo '#define _BASORE_SHRT_MAX      $(LIMIT_SHORT)'                         >> $@
+	echo '#define _BASORE_INT_MAX       $(LIMIT_INT)'                           >> $@
+	echo '#define _BASORE_LONG_MAX      $(LIMIT_LONG)'                          >> $@
+	echo '#define _BASORE_LLONG_MAX     $(LIMIT_LONG_LONG)'                     >> $@
 
 # Target: clean
 # Cleans all generated files

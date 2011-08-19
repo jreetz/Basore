@@ -34,7 +34,7 @@ namespace std {
 /// \returns Does not return.
 ///
 /// \note Referenced from the International C11 Standard §7.22.4.1.
-__public __noreturn void abort();
+extern __public __noreturn void abort();
 
 /// \brief Causes a normal termination from the calling process.
 ///
@@ -43,7 +43,7 @@ __public __noreturn void abort();
 /// \returns Does not return.
 ///
 /// \note Referenced from the International C11 Standard §7.22.4.4.
-__public __noreturn void exit(int status);
+extern __public __noreturn void exit(int status);
 
 /// \brief Causes a fast termination from the calling process.
 ///
@@ -52,7 +52,7 @@ __public __noreturn void exit(int status);
 /// \returns Does not return.
 ///
 /// \note Referenced from the International C11 Standard §7.22.4.7.
-__public __noreturn void quick_exit(int status);
+extern __public __noreturn void quick_exit(int status);
 
 /// \brief Causes an immediate termination from the calling process.
 ///
@@ -61,7 +61,7 @@ __public __noreturn void quick_exit(int status);
 /// \returns Does not return.
 ///
 /// \note Referenced from the International C11 Standard §7.22.4.5.
-__public __noreturn void _Exit(int status);
+extern __public __noreturn void _Exit(int status);
 
 /// \brief Registers a function to be called upon normal termination.
 ///
@@ -69,8 +69,8 @@ __public __noreturn void _Exit(int status);
 ///
 /// \returns 0 on success and -1 on failure.
 ///
-/// \note Referenced from the International C11 Standard §7.22.4.5.
-__public int atexit(void (*func)());
+/// \note Referenced from the International C11 Standard §7.22.4.2.
+extern __public int atexit(void (*func)());
 
 /// \brief Registers a function to be called upon fast termination.
 ///
@@ -78,8 +78,27 @@ __public int atexit(void (*func)());
 ///
 /// \returns 0 on success and -1 on failure.
 ///
-/// \note Referenced from the International C11 Standard §7.22.4.5.
-__public int at_quick_exit(void (*func)());
+/// \note Referenced from the International C11 Standard §7.22.4.3.
+extern __public int at_quick_exit(void (*func)());
+
+/// \brief Retrieves a value from an environment list.
+///
+/// \param[in]  name    Name of the environment variable.
+///
+/// \returns A pointer to the associated string, or a null pointer if it cannot be found.
+///
+/// \note Referenced from the International C11 Standard §7.22.4.6.
+extern __public char* getenv(const char* name);
+
+/// \brief Execute system command.
+///
+/// \param[in]  string  Name of the requested command.
+///
+/// \returns If \c string is null, returns non-zero if a command processor is available; else,
+///          returns the result of the executed command.
+///
+/// \note Referenced from the International C11 Standard §7.22.4.8.
+extern __public int system(const char* string);
 
 #ifdef __cplusplus
 } // namespace std {
