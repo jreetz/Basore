@@ -189,7 +189,7 @@ else
 FLAGS := $(CPPFLAGS)
 endif
 
-FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -Werror -pedantic
+FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
 
 # Rule: C/C++ Compilation
 %.c.o: %.c makefile

@@ -12,6 +12,20 @@
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include "internal.h"
 
+// Buffered space available to malloc() and friends when os fails.
+unsigned char _BASORE_emergency_buffer[MEMORY_EMERGENCY_BUFFER];
+
+// Emergency memory block.
+struct _BASORE_memory_block _BASORE_emergency_memory_block =
+    {
+        NULL,
+        MEMORY_EMERGENCY_BUFFER,
+        true
+    };
+
+// \brief Emergency memory block.
+struct _BASORE_memory_block _BASORE_first_memory_block = { NULL, 0, true };
+
 // Linked list of quick exit functions.
 struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];
 
