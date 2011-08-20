@@ -28,7 +28,7 @@ __public void free(void* ptr)
     if (ptr)
     {
         // No; make available
-        ((struct _BASORE_memory_block*)ptr)->available = true;
+        (((struct _BASORE_memory_block*)ptr) - 1)->available = true;
 
         // FIXME: Merge adjacent free blocks
     }

@@ -16,15 +16,10 @@
 unsigned char _BASORE_emergency_buffer[MEMORY_EMERGENCY_BUFFER];
 
 // Emergency memory block.
-struct _BASORE_memory_block _BASORE_emergency_memory_block =
-    {
-        NULL,
-        MEMORY_EMERGENCY_BUFFER,
-        true
-    };
+struct _BASORE_memory_chunk _BASORE_emergency_memory_chunk = { NULL, MEMORY_EMERGENCY_BUFFER };
 
-// \brief Emergency memory block.
-struct _BASORE_memory_block _BASORE_first_memory_block = { NULL, 0, true };
+// \brief First normal memory chunk.
+struct _BASORE_memory_chunk _BASORE_first_memory_chunk = { NULL, 0 };
 
 // Linked list of quick exit functions.
 struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];

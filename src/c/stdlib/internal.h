@@ -29,7 +29,17 @@ struct _BASORE_function
     void (*address)();
 };
 
-/// \brief
+/// \brief Contains a disparate chunk of memory to be allocated and freed by the system.
+struct _BASORE_memory_chunk
+{
+    /// \brief Next memory chunk.
+    struct _BASORE_memory_chunk* next;
+
+    /// \brief Size (in bytes) of this memory chunk.
+    unsigned long int size;
+};
+
+/// \brief Subdivides memory chunks into blocks which are given out.
 struct _BASORE_memory_block
 {
     /// \brief Next memory block.
@@ -45,11 +55,11 @@ struct _BASORE_memory_block
 /// \brief Buffered space available to malloc() and friends when os fails.
 extern unsigned char _BASORE_emergency_buffer[MEMORY_EMERGENCY_BUFFER];
 
-/// \brief Emergency memory block.
-extern struct _BASORE_memory_block _BASORE_emergency_memory_block;
+/// \brief Emergency memory chunk.
+extern struct _BASORE_memory_chunk _BASORE_emergency_memory_chunk;
 
-/// \brief Emergency memory block.
-extern struct _BASORE_memory_block _BASORE_first_memory_block;
+/// \brief First normal memory chunk.
+extern struct _BASORE_memory_chunk _BASORE_first_memory_chunk;
 
 /// \brief Linked list of exit functions.
 extern struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];
