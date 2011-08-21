@@ -13,10 +13,6 @@
 #include <configuration.h>
 #include <stddef.h>
 
-#ifdef __cplusplus
-namespace std {
-#endif //defined(__cplusplus)
-
 /// \brief Exits the application and returns to the environment.
 ///
 /// \returns Does not return.
@@ -39,7 +35,3 @@ __public void* __platform_allocate(size_t size, size_t* real);
 /// \param[in]  size    The size (in bytes) of the memory to free.
 /// \param[in]  memory  Address of the memory to free.
 __public void* __platform_free(size_t size, void* memory);
-
-#ifdef __cplusplus
-} // namespace std {
-#endif //defined(__cplusplus)

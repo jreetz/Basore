@@ -15,11 +15,21 @@
 // Buffered space available to malloc() and friends when os fails.
 unsigned char _BASORE_emergency_buffer[MEMORY_EMERGENCY_BUFFER];
 
-// Emergency memory block.
-struct _BASORE_memory_chunk _BASORE_emergency_memory_chunk = { NULL, MEMORY_EMERGENCY_BUFFER };
+// Emergency memory chunk
+struct _BASORE_memory_chunk _BASORE_emergency_memory_chunk =
+    {
+        NULL,
+        MEMORY_EMERGENCY_BUFFER,
+        (struct _BASORE_memory_block*)(_BASORE_emergency_buffer)
+    };
 
-// \brief First normal memory chunk.
-struct _BASORE_memory_chunk _BASORE_first_memory_chunk = { NULL, 0 };
+// First normal memory chunk.
+struct _BASORE_memory_chunk _BASORE_first_memory_chunk =
+    {
+        NULL,
+        0,
+        NULL
+    };
 
 // Linked list of quick exit functions.
 struct _BASORE_function _BASORE_quick_exit_functions[QUICK_EXIT_FUNCTION_BUFFERED];

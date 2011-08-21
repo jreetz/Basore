@@ -20,17 +20,17 @@ int main()
     bool result = true;
 
     // Allocate some memory
-    int* int_pointer = (int*)malloc(sizeof (int));
+    int* int_pointer = (char*)malloc(sizeof (int));
     char* char_pointer = (char*)malloc(sizeof (char));
-    bool* bool_pointer = (bool*)malloc(sizeof (bool));
+    bool* bool_pointer = (bool*)malloc(sizeof (int) * 23);
 
     // Store values
+    *int_pointer = 23;
     *char_pointer = 'f';
     *bool_pointer = false;
-    *int_pointer = 42362;
 
     // Test: Check the values
-    result = result && (*int_pointer == 42362);
+    result = result && (*int_pointer == 23);
     result = result && (*char_pointer == 'f');
     result = result && !(*bool_pointer);
 
@@ -49,6 +49,6 @@ int main()
     free(char_pointer);
     free(bool_pointer);
 
-    // Return failure
+    // Return status
     return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

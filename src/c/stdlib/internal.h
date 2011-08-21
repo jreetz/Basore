@@ -29,16 +29,6 @@ struct _BASORE_function
     void (*address)();
 };
 
-/// \brief Contains a disparate chunk of memory to be allocated and freed by the system.
-struct _BASORE_memory_chunk
-{
-    /// \brief Next memory chunk.
-    struct _BASORE_memory_chunk* next;
-
-    /// \brief Size (in bytes) of this memory chunk.
-    unsigned long int size;
-};
-
 /// \brief Subdivides memory chunks into blocks which are given out.
 struct _BASORE_memory_block
 {
@@ -50,6 +40,19 @@ struct _BASORE_memory_block
 
     /// \brief Indicates availability of the memory block.
     bool available;
+};
+
+/// \brief Contains a disparate chunk of memory to be allocated and freed by the system.
+struct _BASORE_memory_chunk
+{
+    /// \brief Next memory chunk.
+    struct _BASORE_memory_chunk* next;
+
+    /// \brief Size (in bytes) of this memory chunk.
+    unsigned long int size;
+
+    /// \brief Initial memory block
+    struct _BASORE_memory_block* first_block;
 };
 
 /// \brief Buffered space available to malloc() and friends when os fails.

@@ -28,7 +28,7 @@ TARGET := $(CURDIR)/lib/lib$(LANG).a
 # Default Target: all
 # Compiles all files and builds library
 .PHONY: all
-all: includes $(CURDIR)/include/configuration.h $(OBJECT)
+all: $(CURDIR)/include/configuration.h includes files
 	mkdir -p $(dir $(TARGET))
 	$(AR) rc $(TARGET) $(OBJECT)
 
@@ -47,6 +47,19 @@ includes: makefile
 -include $(CURDIR)/platform/$(ARCH)-$(COMPILER)/configuration.mk
 -include $(CURDIR)/platform/$(SYSTEM)-$(COMPILER)/configuration.mk
 -include $(CURDIR)/platform/$(ARCH)-$(SYSTEM)-$(COMPILER)/configuration.mk
+
+# Include Rule Sets
+-include $(CURDIR)/platform/$(ARCH)/rules.mk
+-include $(CURDIR)/platform/$(SYSTEM)/rules.mk
+-include $(CURDIR)/platform/$(COMPILER)/rules.mk
+-include $(CURDIR)/platform/$(ARCH)-$(SYSTEM)/rules.mk
+-include $(CURDIR)/platform/$(ARCH)-$(COMPILER)/rules.mk
+-include $(CURDIR)/platform/$(SYSTEM)-$(COMPILER)/rules.mk
+-include $(CURDIR)/platform/$(ARCH)-$(SYSTEM)-$(COMPILER)/rules.mk
+
+# Target: files
+.PHONY: files
+files: $(OBJECT)
 
 # Target: configuration
 # Outputs all configuration parameters to <configuration.h>
@@ -152,12 +165,11 @@ $(CURDIR)/include/configuration.h: makefile
 # Cleans all generated files
 .PHONY: clean
 clean: makefile
-	-$(RM) $(TEST_OBJECT)
-	-$(RM) $(OBJECT)
-	-$(RM) $(DEPEND)
+	-$(RM) $(shell find $(CURDIR) -type f -name "*.t")
+	-$(RM) $(shell find $(CURDIR) -type f -name "*.o")
+	-$(RM) $(shell find $(CURDIR) -type f -name "*.d")
 	-$(RM) -r $(CURDIR)/include
 	-$(RM) -r $(CURDIR)/lib
-	-$(RM) $(CURDIR)/include/configuration.h
 
 # Target: test
 .PHONY: test
@@ -193,7 +205,7 @@ FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
 
 # Rule: C/C++ Compilation
 %.c.o: %.c makefile
-	$(CC) $(FLAGS) -MMD -MP -MT "$*.c.o $*.c.d" \
+	$(CC) -g $(FLAGS) -MMD -MP -MT "$*.c.o $*.c.d" \
 		-I"$(CURDIR)/include" \
 		-I"$(subst $(CURDIR),$(CURDIR)/platform/$(ARCH)-$(SYSTEM)-$(COMPILER),$(<D))" \
 		-I"$(subst $(CURDIR),$(CURDIR)/platform/$(SYSTEM)-$(COMPILER),$(<D))" \
@@ -203,6 +215,20 @@ FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
 		-I"$(subst $(CURDIR),$(CURDIR)/platform/$(SYSTEM),$(<D))" \
 		-I"$(subst $(CURDIR),$(CURDIR)/platform/$(ARCH),$(<D))" \
 		-I"$(<D)" \
+		$(if $($(findstring $(CURDIR)/platform/$(ARCH)-$(SYSTEM)-$(COMPILER)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(ARCH)-$(SYSTEM)-$(COMPILER)/,$(<D))_INCLUDE)") \
+		$(if $($(findstring $(CURDIR)/platform/$(SYSTEM)-$(COMPILER)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(SYSTEM)-$(COMPILER)/,$(<D))_INCLUDE)") \
+		$(if $($(findstring $(CURDIR)/platform/$(ARCH)-$(COMPILER)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(ARCH)-$(COMPILER)/,$(<D))_INCLUDE)") \
+		$(if $($(findstring $(CURDIR)/platform/$(ARCH)-$(SYSTEM)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(ARCH)-$(SYSTEM)/,$(<D))_INCLUDE)") \
+		$(if $($(findstring $(CURDIR)/platform/$(COMPILER)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(COMPILER)/,$(<D))_INCLUDE)") \
+		$(if $($(findstring $(CURDIR)/platform/$(SYSTEM)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(SYSTEM)/,$(<D))_INCLUDE)") \
+		$(if $($(findstring $(CURDIR)/platform/$(ARCH)/,$(<D))_INCLUDE),\
+		    -I"$($(findstring $(CURDIR)/platform/$(ARCH)/,$(<D))_INCLUDE)") \
 		-c -x $(LANG) $< -x none -o $@
 
 # Rule: C++ Compilation
@@ -213,7 +239,7 @@ FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
 
 # Rule: C/C++ Test Compilation
 %.c.t: %.c makefile
-	$(CC) $(FLAGS) \
+	$(CC) -g $(FLAGS) \
 		-I"$(CURDIR)/include" \
 		-x $(LANG) $< -x none $(TARGET) -o $@
 

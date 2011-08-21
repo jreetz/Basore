@@ -14,34 +14,30 @@
 #include <stdbool.h>
 #include <platform.h>
 
-#ifdef __cplusplus
-namespace std {
-#endif // defined(__cplusplus)
-
 // Attempt to allocate from the passed linked list of memory chunks
 static void* alloc(struct _BASORE_memory_chunk* chunk, struct _BASORE_memory_chunk** last,
     size_t size)
 {
+    // Iterate through passed memory chunks
     for (struct _BASORE_memory_chunk* i = chunk; i != NULL; i = i->next)
     {
-        // Is this memory chunk large enough ?
+        // Is this chunk big enough ?
         if (i->size > size)
         {
-            // Yes; iterate through exposed blocks
-            for (struct _BASORE_memory_block* j = (struct _BASORE_memory_block*)(i + 1);
-                 j != NULL; j = j->next)
+            // Yes; iterate through the passed memory blocks
+            for (struct _BASORE_memory_block* j = i->first_block; j != NULL; j = j->next)
             {
-                // Is this block available and large enough ?
+                // Is the block available and large enough ?
                 if (j->available && j->size > size)
                 {
                     // Yes; can we split it ?
-                    if (j->size > (size + sizeof(struct _BASORE_memory_block) + 5))
+                    if (j->size > size + sizeof(long int) + sizeof(struct _BASORE_memory_block))
                     {
-                        // Yes; split it.
+                        // Good; set it up
                         struct _BASORE_memory_block* temp = (struct _BASORE_memory_block*)
                             ((unsigned char*)(j + 1) + size);
 
-                        temp->next = j->next;
+                        temp->next = temp;
                         j->next = temp;
 
                         j->next->size = j->size - size - sizeof(struct _BASORE_memory_block);
@@ -50,69 +46,80 @@ static void* alloc(struct _BASORE_memory_chunk* chunk, struct _BASORE_memory_chu
                         j->size = size;
                     }
 
-                    // Set it not available
+                    // Make it not available
                     j->available = false;
 
-                    // Return it
+                    // Return the memory
                     return (void*)(j + 1);
                 }
             }
         }
 
-        // Set last iterator
+        // Set last pointer, if available
         if (last != NULL)
         {
             *last = i;
         }
     }
 
-    // Damn; return null
+    // Damn; out of luck
     return NULL;
 }
+
+#ifdef __cplusplus
+namespace std {
+#endif // defined(__cplusplus)
 
 /// \par Description:
 /// The \ref malloc function allocates space for an object whose size is specified by size and
 /// whose value is indeterminate.
 __public void* malloc(size_t size)
 {
-    // Iterate through available memory chunks
-    struct _BASORE_memory_chunk* last;
+    // Sanity check: are we allocating nothing ?
+    if (size == 0)
+    {
+        // Yes; return nothing
+        return NULL;
+    }
 
+    // Attempt to use an allocated chunk
+    struct _BASORE_memory_chunk* last;
     void* result = alloc(&_BASORE_first_memory_chunk, &last, size);
 
-    // Did we get some ?
+    // Did we get memory ?
     if (result != NULL)
     {
-        // Yes; return it
+        // Good; return it
         return result;
     }
 
-    // Damn. Need more memory from system.
-    size_t real_size;
-    last->next = (struct _BASORE_memory_chunk*)__platform_allocate(size + 50000, &real_size);
+    // Try and get more memory from system
+    size_t real;
+    last->next = (struct _BASORE_memory_chunk*)(__platform_allocate(size, &real));
 
-    // Did we get any ?
+    // Did we get some ?
     if (last->next != NULL)
     {
         // Yes; set it up
-        last->next->size = real_size;
+        last->next->next = NULL;
+        last->next->size = real - sizeof(struct _BASORE_memory_chunk);
+        last->next->first_block = (struct _BASORE_memory_block*)(last->next + 1);
 
-        // Allocate and return
+        // Use it
         return alloc(last->next, NULL, size);
     }
 
-    // Emergency situation. Use emergency buffer.
-    result = alloc(&_BASORE_emergency_memory_chunk, NULL, size);
-
-    // Did we get some ?
-    if (result != NULL)
+    // Emergency situation; have we been here before ?
+    if (_BASORE_emergency_memory_chunk.first_block->size == 0)
     {
-        // Yes; return it
-        return result;
+        // No; initialize emergency block
+        _BASORE_emergency_memory_chunk.first_block->available = true;
+        _BASORE_emergency_memory_chunk.first_block->size = _BASORE_emergency_memory_chunk.size -
+            sizeof (struct _BASORE_memory_block);
     }
 
-    // Damn. We're all doomed. Must be 2012.
-    return NULL;
+    // Try to allocate off the emergency chunk
+    return alloc(&_BASORE_emergency_memory_chunk, NULL, size);
 }
 
 #ifdef __cplusplus
