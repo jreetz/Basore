@@ -11,6 +11,7 @@
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #include "internal.h"
+#include <platform.h>
 
 #ifdef __cplusplus
 namespace std {
@@ -27,10 +28,66 @@ __public void free(void* ptr)
     // Null ?
     if (ptr)
     {
-        // No; make available
-        (((struct _BASORE_memory_block*)ptr) - 1)->available = true;
+        // Get header
+        struct _BASORE_memory_block* header = (((struct _BASORE_memory_block*)ptr) - 1);
 
-        // FIXME: Merge adjacent free blocks
+        // No; make available
+        header->available = true;
+
+        // Merge next block if it is free
+        if (header->next != NULL && header->next->available)
+        {
+            header->size += sizeof (struct _BASORE_memory_block) + header->next->size;
+            header->next = header->next->next;
+
+            if (header->next)
+            {
+                header->next->previous = header;
+            }
+        }
+
+        // Merge previous block if it is free
+        if (header->previous != NULL && header->previous->available)
+        {
+            header->previous->size += sizeof (struct _BASORE_memory_block) + header->size;
+            header->previous->next = header->next;
+
+            if (header->previous->next)
+            {
+                header->previous->next->previous = header->previous;
+            }
+
+            header = header->previous;
+        }
+
+        // Free chunk to system
+        if (header->previous == NULL && header->next == NULL)
+        {
+            // We just free´d the last chunk
+            // Get chunk pointer
+            struct _BASORE_memory_chunk* chunk = header->parent;
+
+            // Right now, we only free the -last- chunk
+            if (chunk->next == NULL)
+            {
+                // Is this the first chunk ?
+                if (chunk->previous == NULL)
+                {
+                    // Yes; free the first_block pointer
+                    __platform_free(chunk->size, chunk->first_block);
+
+                    // Null it
+                    chunk->size = 0;
+                    chunk->first_block = NULL;
+                }
+                else
+                {
+                    // No; free the whole chunk
+                    chunk->previous->next = NULL;
+                    __platform_free(chunk->size + sizeof(struct _BASORE_memory_chunk), chunk);
+                }
+            }
+        }
     }
 }
 

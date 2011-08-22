@@ -37,11 +37,14 @@ static void* alloc(struct _BASORE_memory_chunk* chunk, struct _BASORE_memory_chu
                         struct _BASORE_memory_block* temp = (struct _BASORE_memory_block*)
                             ((unsigned char*)(j + 1) + size);
 
-                        temp->next = temp;
+                        temp->next = j->next;
+                        temp->previous = j;
+
                         j->next = temp;
 
                         j->next->size = j->size - size - sizeof(struct _BASORE_memory_block);
                         j->next->available = true;
+                        j->next->parent = chunk;
 
                         j->size = size;
                     }
@@ -93,26 +96,63 @@ __public void* malloc(size_t size)
         return result;
     }
 
-    // Try and get more memory from system
+    // See how much more memory we need
+    // FIXME: Make 0x50000 a configuration option somewhere
+    size_t needed = size + 0x50000;
     size_t real;
-    last->next = (struct _BASORE_memory_chunk*)(__platform_allocate(size, &real));
+
+    // Try and get more memory from system
+    if (last->previous == NULL)
+    {
+        // First block.
+        last->first_block = (struct _BASORE_memory_block*)(__platform_allocate(needed, &real));
+
+        // Did we get it ?
+        if (last->first_block)
+        {
+            // Set it up
+            last->size = real;
+            last->first_block->parent = last;
+        }
+    }
+    else
+    {
+        // Not first block
+        last->next = (struct _BASORE_memory_chunk*)(__platform_allocate(needed, &real));
+
+        // Did we get it ?
+        if (last->next)
+        {
+            // Set it up
+            last->next->next = NULL;
+            last->next->previous = last;
+            last->next->size = real - sizeof(struct _BASORE_memory_chunk);
+            last->next->first_block = (struct _BASORE_memory_block*)(last->next + 1);
+
+            last->next->first_block->parent = last->next;
+
+            last = last->next;
+        }
+    }
 
     // Did we get some ?
-    if (last->next != NULL)
+    if (last != NULL)
     {
-        // Yes; set it up
-        last->next->next = NULL;
-        last->next->size = real - sizeof(struct _BASORE_memory_chunk);
-        last->next->first_block = (struct _BASORE_memory_block*)(last->next + 1);
+        // Yes; finish setting it up
+        last->first_block->previous = NULL;
+        last->first_block->next = NULL;
+        last->first_block->size = last->size - sizeof(struct _BASORE_memory_block);
+        last->first_block->available = true;
 
         // Use it
-        return alloc(last->next, NULL, size);
+        return alloc(last, NULL, size);
     }
 
     // Emergency situation; have we been here before ?
     if (_BASORE_emergency_memory_chunk.first_block->size == 0)
     {
         // No; initialize emergency block
+        _BASORE_emergency_memory_chunk.first_block->parent = &_BASORE_emergency_memory_chunk;
         _BASORE_emergency_memory_chunk.first_block->available = true;
         _BASORE_emergency_memory_chunk.first_block->size = _BASORE_emergency_memory_chunk.size -
             sizeof (struct _BASORE_memory_block);

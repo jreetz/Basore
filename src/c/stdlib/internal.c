@@ -19,6 +19,7 @@ unsigned char _BASORE_emergency_buffer[MEMORY_EMERGENCY_BUFFER];
 struct _BASORE_memory_chunk _BASORE_emergency_memory_chunk =
     {
         NULL,
+        NULL,
         MEMORY_EMERGENCY_BUFFER,
         (struct _BASORE_memory_block*)(_BASORE_emergency_buffer)
     };
@@ -26,6 +27,7 @@ struct _BASORE_memory_chunk _BASORE_emergency_memory_chunk =
 // First normal memory chunk.
 struct _BASORE_memory_chunk _BASORE_first_memory_chunk =
     {
+        NULL,
         NULL,
         0,
         NULL

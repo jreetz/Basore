@@ -235,7 +235,7 @@ FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
 
 # Rule: Assembly Compilation
 %.s.o: %.s makefile
-	$(CC) -c $< -o $@
+	$(CC) -g -c $< -o $@
 
 # Rule: C/C++ Test Compilation
 %.c.t: %.c makefile

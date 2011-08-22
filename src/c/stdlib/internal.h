@@ -29,9 +29,18 @@ struct _BASORE_function
     void (*address)();
 };
 
+// Forward Declaration
+struct _BASORE_memory_chunk;
+
 /// \brief Subdivides memory chunks into blocks which are given out.
 struct _BASORE_memory_block
 {
+    /// \brief Parent chunk.
+    struct _BASORE_memory_chunk* parent;
+
+    /// \brief Previous memory block.
+    struct _BASORE_memory_block* previous;
+
     /// \brief Next memory block.
     struct _BASORE_memory_block* next;
 
@@ -45,6 +54,9 @@ struct _BASORE_memory_block
 /// \brief Contains a disparate chunk of memory to be allocated and freed by the system.
 struct _BASORE_memory_chunk
 {
+    /// \brief Previous memory chunk.
+    struct _BASORE_memory_chunk* previous;
+
     /// \brief Next memory chunk.
     struct _BASORE_memory_chunk* next;
 

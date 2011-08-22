@@ -20,9 +20,9 @@ int main()
     bool result = true;
 
     // Allocate some memory
-    int* int_pointer = (char*)malloc(sizeof (int));
+    int* int_pointer = (int*)malloc(sizeof (int));
     char* char_pointer = (char*)malloc(sizeof (char));
-    bool* bool_pointer = (bool*)malloc(sizeof (int) * 23);
+    bool* bool_pointer = (bool*)malloc(20159);
 
     // Store values
     *int_pointer = 23;

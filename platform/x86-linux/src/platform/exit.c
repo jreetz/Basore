@@ -13,16 +13,18 @@
 #include <platform.h>
 #include <sys/syscall.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif // defined(__cplusplus)
+
 /// \par Description:
 /// Requests an exit from the specific hosted platform. This function should never return.
 __public __noreturn void __platform_exit(int status)
 {
-#ifdef __STDC_HOSTED__
     // Delegate to the implementation
     __asm__ volatile ("movl %0, %%eax" : : "c" (SYS_exit) : "%eax");
     __asm__ volatile ("movl %0, %%ebx" : : "m" (status) : "%ebx");
-    __asm__ volatile ("sysenter");
-#endif // defined(__STDC_HOSTED__)
+    __asm__ volatile ("int $0x80");
 
     // Just halt for now
     // FIXME: Figure out how-the-hell this is supposed to be implemented.
@@ -32,3 +34,7 @@ __public __noreturn void __platform_exit(int status)
         __asm__ volatile ("hlt");
     }
 }
+
+#ifdef __cplusplus
+} // extern "C" {
+#endif // defined(__cplusplus)
