@@ -22,7 +22,7 @@ namespace std {
 /// The \ref atexit function registers the function pointed to by \c func, to be called without
 /// arguments at normal program termination. It is unspecified whether a call to the
 /// \ref atexit function that does not happen before the \ref exit function is called will succeed.
-__public int atexit(__attribute__ ((unused)) void (*func)())
+__public __constant int atexit(__attribute__ ((unused)) void (*func)())
 {
     // FIXME: Delegate to __cxa_atexit(...)
     // return __cxa_atexit(func);

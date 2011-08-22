@@ -10,13 +10,14 @@
 ///
 /// You should have received a copy of the CC0 Public Domain Dedication along with this software.
 /// If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+#include <configuration.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif // defined(__cplusplus)
 
 /// \brief Runtime initialization procedure.
-void _init()
+__constant void _init()
 {
     // TODO: Iterate through .init_array; call all static constructors
     // TODO: Iterate through .ctors; call all static constructors

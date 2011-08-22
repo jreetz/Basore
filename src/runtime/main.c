@@ -17,7 +17,7 @@ extern "C" {
 #endif // defined(__cplusplus)
 
 /// \brief Runtime main procedure.
-void _start()
+__noreturn void _start()
 {
     // Declare status
     int status;

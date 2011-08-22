@@ -20,7 +20,7 @@ namespace std {
 /// \par Description:
 /// Compute the absolute value of an integer \c j. If the result cannot be represented,
 /// the behavior is undefined.
-__public int abs(int j)
+__public __constant int abs(int j)
 {
     static const int s_bits = CHAR_BIT * sizeof(int) - 1;
 
@@ -36,7 +36,7 @@ __public int abs(int j)
 /// \par Description:
 /// Compute the absolute value of an integer \c j. If the result cannot be represented,
 /// the behavior is undefined.
-__public long int abs(long int j)
+__public __constant long int abs(long int j)
 {
     return labs(j);
 }
@@ -44,7 +44,7 @@ __public long int abs(long int j)
 /// \par Description:
 /// Compute the absolute value of an integer \c j. If the result cannot be represented,
 /// the behavior is undefined.
-__public long long int abs(long long int j)
+__public __constant long long int abs(long long int j)
 {
     return llabs(j);
 }

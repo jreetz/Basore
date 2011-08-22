@@ -86,7 +86,7 @@ __public void* malloc(size_t size)
     }
 
     // Attempt to use an allocated chunk
-    struct _BASORE_memory_chunk* last;
+    struct _BASORE_memory_chunk* last = NULL;
     void* result = alloc(&_BASORE_first_memory_chunk, &last, size);
 
     // Did we get memory ?
@@ -99,7 +99,7 @@ __public void* malloc(size_t size)
     // See how much more memory we need
     // FIXME: Make 0x50000 a configuration option somewhere
     size_t needed = size + 0x50000;
-    size_t real;
+    size_t real = 0;
 
     // Try and get more memory from system
     if (last->previous == NULL)

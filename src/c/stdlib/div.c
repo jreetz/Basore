@@ -18,7 +18,7 @@ namespace std {
 
 /// \par Description:
 /// Compute the quotient and remainder of the passed values in a single operation.
-__public div_t div(int numer, int denom)
+__public __constant div_t div(int numer, int denom)
 {
     #include <div.i>
 }
@@ -26,14 +26,14 @@ __public div_t div(int numer, int denom)
 #ifdef __cplusplus
 /// \par Description:
 /// Compute the quotient and remainder of the passed values in a single operation.
-__public ldiv_t div(long int numer, long int denom)
+__public __constant ldiv_t div(long int numer, long int denom)
 {
     return ldiv(numer, denom);
 }
 
 /// \par Description:
 /// Compute the quotient and remainder of the passed values in a single operation.
-__public lldiv_t div(long long int numer, long long int denom)
+__public __constant lldiv_t div(long long int numer, long long int denom)
 {
     return lldiv(numer, denom);
 }

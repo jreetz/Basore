@@ -18,7 +18,7 @@ namespace std {
 
 /// \par Description:
 /// Compute the quotient and remainder of the passed values in a single operation.
-__public lldiv_t lldiv(long long int numer, long long int denom)
+__public __constant lldiv_t lldiv(long long int numer, long long int denom)
 {
     #include <lldiv.i>
 }

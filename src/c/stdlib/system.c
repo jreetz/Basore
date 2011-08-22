@@ -23,7 +23,7 @@ namespace std {
 /// function passes the string pointed to by \c string to that command processor to be
 /// executed in a manner which the implementation shall document; this might then cause the
 /// program calling \ref system to behave in a non-conforming manner or to terminate.
-__public int system(__attribute__ ((unused)) const char* string)
+__public __constant int system(__attribute__ ((unused)) const char* string)
 {
     // TODO: Execute command
 

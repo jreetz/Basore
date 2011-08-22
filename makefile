@@ -192,7 +192,7 @@ test: $(TEST_OBJECT)
 CFLAGS := -std=c1x -nostdinc
 
 # C++ Compiler Flags
-CPPFLAGS := -std=c++0x -nostdinc++ -Weffc++
+CPPFLAGS := -std=c++0x -nostdinc++ -Weffc++ -fabi-version=0
 
 # Compiler Flags
 ifeq "$(LANG)" "c"
@@ -201,11 +201,12 @@ else
 FLAGS := $(CPPFLAGS)
 endif
 
-FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
+FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic -O3 -fno-builtin \
+    -Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn
 
 # Rule: C/C++ Compilation
 %.c.o: %.c makefile
-	$(CC) -g $(FLAGS) -MMD -MP -MT "$*.c.o $*.c.d" \
+	$(CC) $(FLAGS) -MMD -MP -MT "$*.c.o $*.c.d" \
 		-I"$(CURDIR)/include" \
 		-I"$(subst $(CURDIR),$(CURDIR)/platform/$(ARCH)-$(SYSTEM)-$(COMPILER),$(<D))" \
 		-I"$(subst $(CURDIR),$(CURDIR)/platform/$(SYSTEM)-$(COMPILER),$(<D))" \
@@ -235,11 +236,11 @@ FLAGS += -nodefaultlibs -nostartfiles -Wall -Wextra -pedantic
 
 # Rule: Assembly Compilation
 %.s.o: %.s makefile
-	$(CC) -g -c $< -o $@
+	$(CC) -c $< -o $@
 
 # Rule: C/C++ Test Compilation
 %.c.t: %.c makefile
-	$(CC) -g $(FLAGS) \
+	$(CC) $(FLAGS) \
 		-I"$(CURDIR)/include" \
 		-x $(LANG) $< -x none $(TARGET) -o $@
 

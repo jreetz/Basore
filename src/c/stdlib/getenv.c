@@ -22,7 +22,7 @@ namespace std {
 /// and the method for altering the environment list are implementation-defined. The
 /// \ref getenv function need not avoid data races with other threads of execution that modify
 /// the environment list.
-__public char* getenv(__attribute__ ((unused)) const char* name)
+__public __constant char* getenv(__attribute__ ((unused)) const char* name)
 {
     // TODO: Search environment list
 
