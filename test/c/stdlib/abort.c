@@ -16,7 +16,7 @@
 #include <stdnoreturn.h>
 
 // Signal handler for SIGABRT
-noreturn void abort_handler()
+__noreturn void abort_handler(__attribute__ ((unused)) int signal)
 {
     // Just return success
     __platform_exit(EXIT_SUCCESS);

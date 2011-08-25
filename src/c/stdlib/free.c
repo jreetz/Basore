@@ -67,24 +67,28 @@ __public void free(void* ptr)
             // Get chunk pointer
             struct _BASORE_memory_chunk* chunk = header->parent;
 
-            // Right now, we only free the -last- chunk
-            if (chunk->next == NULL)
+            // Is this the emergency chunk ?
+            if (chunk != &_BASORE_emergency_memory_chunk)
             {
-                // Is this the first chunk ?
-                if (chunk->previous == NULL)
+                // No; we only free the -last- chunk
+                if (chunk->next == NULL)
                 {
-                    // Yes; free the first_block pointer
-                    __platform_free(chunk->size, chunk->first_block);
+                    // Is this the first chunk ?
+                    if (chunk->previous == NULL)
+                    {
+                        // Yes; free the first_block pointer
+                        __platform_free(chunk->size, chunk->first_block);
 
-                    // Null it
-                    chunk->size = 0;
-                    chunk->first_block = NULL;
-                }
-                else
-                {
-                    // No; free the whole chunk
-                    chunk->previous->next = NULL;
-                    __platform_free(chunk->size + sizeof(struct _BASORE_memory_chunk), chunk);
+                        // Null it
+                        chunk->size = 0;
+                        chunk->first_block = NULL;
+                    }
+                    else
+                    {
+                        // No; free the whole chunk
+                        chunk->previous->next = NULL;
+                        __platform_free(chunk->size + sizeof(struct _BASORE_memory_chunk), chunk);
+                    }
                 }
             }
         }

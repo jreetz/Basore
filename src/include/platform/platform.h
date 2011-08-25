@@ -20,7 +20,7 @@ extern "C" {
 /// \brief Exits the application and returns to the environment.
 ///
 /// \returns Does not return.
-__public __noreturn void __platform_exit();
+__public __noreturn void __platform_exit(int status);
 
 /// \brief Allocates at least the requested size (in bytes) of memory.
 ///

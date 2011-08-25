@@ -18,17 +18,17 @@
 /// \brief Specifies the default action for the signal.
 ///
 /// \note Referenced from the International C11 Standard §7.14-3.
-#define SIG_DFL (void (*)())0
+#define SIG_DFL (void (*)(int))0
 
 /// \brief Specifies an error occurred in the \ref signal() function.
 ///
 /// \note Referenced from the International C11 Standard §7.14-3.
-#define SIG_ERR (void (*)())2
+#define SIG_ERR (void (*)(int))2
 
 /// \brief Specifies a signal to be ignored.
 ///
 /// \note Referenced from the International C11 Standard §7.14-3.
-#define SIG_IGN (void (*)())1
+#define SIG_IGN (void (*)(int))1
 
 /// \brief Signifies abnormal termination, such as is initiated by the abort function.
 ///
